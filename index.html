@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MindPredict – Mental health score estimator</title>
+  <meta name="description" content="MindPredict uses a trained machine learning model to estimate a mental health score from social media use, sleep, study and activity habits.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#151A18">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%2310B981'/%3E%3Cpath d='M8 19c3-7 7-7 8-3s5 4 8-3' fill='none' stroke='%23151A18' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip-link" href="#assessment">Skip to the assessment</a>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="MindPredict home">
+        <svg class="brand-mark" width="30" height="30" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="9" fill="#10B981"/>
+          <path d="M8 19c3-7 7-7 8-3s5 4 8-3" fill="none" stroke="#151A18" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        <span>MindPredict</span>
+      </a>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#assessment">Assessment</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#disclaimer">Disclaimer</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="shell hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">Estimate a mental health score from everyday habits</h1>
+      <p class="hero-copy">Answer 12 questions about social media use, sleep, study and activity. A trained machine learning model returns a score estimate for the details you enter.</p>
+      <a class="btn btn-primary" href="#assessment">Start the assessment</a>
+    </section>
+
+    <section id="assessment" class="shell workspace" aria-label="Assessment and result">
+      <form id="assessment-form" class="card form-card" novalidate aria-labelledby="form-title">
+        <h2 id="form-title" class="card-title">Your assessment</h2>
+        <p class="card-intro">Every field is required. Nothing is stored; your answers are sent to the model and the score comes straight back.</p>
+
+        <!-- About you -->
+        <section class="form-group" aria-labelledby="group-about">
+          <h3 id="group-about">About you</h3>
+          <div class="fields">
+            <div class="field" data-field="age">
+              <label for="age">Age</label>
+              <div class="control-wrap">
+                <input class="control has-unit" type="number" id="age" name="age" inputmode="numeric" min="10" max="100" step="1" required placeholder="e.g. 21" autocomplete="off" aria-describedby="age-hint age-error">
+                <span class="unit" aria-hidden="true">years</span>
+              </div>
+              <p class="hint" id="age-hint">Whole number from 10 to 100.</p>
+              <p class="error" id="age-error" hidden></p>
+            </div>
+
+            <div class="field" data-field="country">
+              <label for="country">Country</label>
+              <select class="control" id="country" name="country" required aria-describedby="country-error">
+                <option value="" selected disabled>Select a country</option>
+                <option value="India">India</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="UK">UK</option>
+                <option value="Germany">Germany</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Turkey">Turkey</option>
+                <option value="France">France</option>
+                <option value="Other">Other</option>
+              </select>
+              <p class="error" id="country-error" hidden></p>
+            </div>
+
+            <fieldset class="field field-wide choice" data-field="gender" aria-describedby="gender-error">
+              <legend>Gender</legend>
+              <div class="chips">
+                <div class="chip"><input type="radio" id="gender-male" name="gender" value="Male" required><label for="gender-male">Male</label></div>
+                <div class="chip"><input type="radio" id="gender-female" name="gender" value="Female" required><label for="gender-female">Female</label></div>
+              </div>
+              <p class="error" id="gender-error" hidden></p>
+            </fieldset>
+
+            <fieldset class="field field-wide choice" data-field="academic_level" aria-describedby="academic_level-error">
+              <legend>Academic level</legend>
+              <div class="chips">
+                <div class="chip"><input type="radio" id="academic-high-school" name="academic_level" value="High School" required><label for="academic-high-school">High School</label></div>
+                <div class="chip"><input type="radio" id="academic-undergraduate" name="academic_level" value="Undergraduate" required><label for="academic-undergraduate">Undergraduate</label></div>
+                <div class="chip"><input type="radio" id="academic-graduate" name="academic_level" value="Graduate" required><label for="academic-graduate">Graduate</label></div>
+              </div>
+              <p class="error" id="academic_level-error" hidden></p>
+            </fieldset>
+          </div>
+        </section>
+
+        <!-- Social media use -->
+        <section class="form-group" aria-labelledby="group-social">
+          <h3 id="group-social">Social media use</h3>
+          <div class="fields">
+            <div class="field" data-field="most_used_platform">
+              <label for="most_used_platform">Most used platform</label>
+              <select class="control" id="most_used_platform" name="most_used_platform" required aria-describedby="most_used_platform-error">
+                <option value="" selected disabled>Select a platform</option>
+                <option value="Facebook">Facebook</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="Instagram">Instagram</option>
+                <option value="Snapchat">Snapchat</option>
+                <option value="Twitter">Twitter</option>
+                <option value="YouTube">YouTube</option>
+                <option value="TikTok">TikTok</option>
+                <option value="LINE">LINE</option>
+                <option value="KakaoTalk">KakaoTalk</option>
+                <option value="VKontakte">VKontakte</option>
+                <option value="WhatsApp">WhatsApp</option>
+                <option value="WeChat">WeChat</option>
+              </select>
+              <p class="error" id="most_used_platform-error" hidden></p>
+            </div>
+
+            <div class="field" data-field="avg_daily_usage_hours">
+              <label for="avg_daily_usage_hours">Average daily social media use</label>
+              <div class="control-wrap">
+                <input class="control has-unit" type="number" id="avg_daily_usage_hours" name="avg_daily_usage_hours" inputmode="decimal" min="0" max="24" step="any" required placeholder="e.g. 4.5" autocomplete="off" aria-describedby="avg_daily_usage_hours-hint avg_daily_usage_hours-error">
+                <span class="unit" aria-hidden="true">hrs</span>
+              </div>
+              <p class="hint" id="avg_daily_usage_hours-hint">Hours per day, 0 to 24. Decimals are fine.</p>
+              <p class="error" id="avg_daily_usage_hours-error" hidden></p>
+            </div>
+
+            <div class="field" data-field="daily_unlocks">
+              <label for="daily_unlocks">Daily phone unlocks</label>
+              <div class="control-wrap">
+                <input class="control has-unit" type="number" id="daily_unlocks" name="daily_unlocks" inputmode="numeric" min="0" step="1" required placeholder="e.g. 60" autocomplete="off" aria-describedby="daily_unlocks-hint daily_unlocks-error">
+                <span class="unit" aria-hidden="true">per day</span>
+              </div>
+              <p class="hint" id="daily_unlocks-hint">Whole number, 0 or more.</p>
+              <p class="error" id="daily_unlocks-error" hidden></p>
+            </div>
+
+            <fieldset class="field field-wide choice" data-field="purpose_of_use" aria-describedby="purpose_of_use-error">
+              <legend>Main purpose of use</legend>
+              <div class="chips">
+                <div class="chip"><input type="radio" id="purpose-networking" name="purpose_of_use" value="Networking" required><label for="purpose-networking">Networking</label></div>
+                <div class="chip"><input type="radio" id="purpose-education" name="purpose_of_use" value="Education" required><label for="purpose-education">Education</label></div>
+                <div class="chip"><input type="radio" id="purpose-entertainment" name="purpose_of_use" value="Entertainment" required><label for="purpose-entertainment">Entertainment</label></div>
+                <div class="chip"><input type="radio" id="purpose-news" name="purpose_of_use" value="News" required><label for="purpose-news">News</label></div>
+              </div>
+              <p class="error" id="purpose_of_use-error" hidden></p>
+            </fieldset>
+          </div>
+        </section>
+
+        <!-- Routine and stress -->
+        <section class="form-group" aria-labelledby="group-routine">
+          <h3 id="group-routine">Routine and stress</h3>
+          <div class="fields">
+            <div class="field" data-field="study_hours">
+              <label for="study_hours">Study hours</label>
+              <div class="control-wrap">
+                <input class="control has-unit" type="number" id="study_hours" name="study_hours" inputmode="decimal" min="0" max="24" step="any" required placeholder="e.g. 3" autocomplete="off" aria-describedby="study_hours-hint study_hours-error">
+                <span class="unit" aria-hidden="true">hrs</span>
+              </div>
+              <p class="hint" id="study_hours-hint">Hours per day, 0 to 24.</p>
+              <p class="error" id="study_hours-error" hidden></p>
+            </div>
+
+            <div class="field" data-field="physical_activity_hours">
+              <label for="physical_activity_hours">Physical activity</label>
+              <div class="control-wrap">
+                <input class="control has-unit" type="number" id="physical_activity_hours" name="physical_activity_hours" inputmode="decimal" min="0" max="24" step="any" required placeholder="e.g. 1" autocomplete="off" aria-describedby="physical_activity_hours-hint physical_activity_hours-error">
+                <span class="unit" aria-hidden="true">hrs</span>
+              </div>
+              <p class="hint" id="physical_activity_hours-hint">Hours per day, 0 to 24.</p>
+              <p class="error" id="physical_activity_hours-error" hidden></p>
+            </div>
+
+            <div class="field" data-field="sleep_hours_per_night">
+              <label for="sleep_hours_per_night">Sleep per night</label>
+              <div class="control-wrap">
+                <input class="control has-unit" type="number" id="sleep_hours_per_night" name="sleep_hours_per_night" inputmode="decimal" min="0" max="24" step="any" required placeholder="e.g. 7" autocomplete="off" aria-describedby="sleep_hours_per_night-hint sleep_hours_per_night-error">
+                <span class="unit" aria-hidden="true">hrs</span>
+              </div>
+              <p class="hint" id="sleep_hours_per_night-hint">Average hours per night, 0 to 24.</p>
+              <p class="error" id="sleep_hours_per_night-error" hidden></p>
+            </div>
+
+            <fieldset class="field field-wide choice" data-field="stress_level" aria-describedby="stress_level-error">
+              <legend>Stress level</legend>
+              <div class="chips">
+                <div class="chip"><input type="radio" id="stress-low" name="stress_level" value="Low" required><label for="stress-low">Low</label></div>
+                <div class="chip"><input type="radio" id="stress-medium" name="stress_level" value="Medium" required><label for="stress-medium">Medium</label></div>
+                <div class="chip"><input type="radio" id="stress-high" name="stress_level" value="High" required><label for="stress-high">High</label></div>
+                <div class="chip"><input type="radio" id="stress-very-high" name="stress_level" value="Very High" required><label for="stress-very-high">Very High</label></div>
+              </div>
+              <p class="error" id="stress_level-error" hidden></p>
+            </fieldset>
+          </div>
+        </section>
+
+        <div id="form-alert" class="alert" role="alert" hidden>
+          <strong class="alert-title"></strong>
+          <span class="alert-message"></span>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="predict-btn" class="btn btn-primary">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-label">Predict score</span>
+          </button>
+          <button type="button" id="clear-btn" class="btn btn-ghost">Clear form</button>
+          <p id="form-status" class="status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <aside id="results" class="result-panel" data-state="idle" aria-labelledby="result-title">
+        <h2 id="result-title" class="panel-title">Estimated score</h2>
+
+        <div class="state state-idle">
+          <p class="score score-idle" aria-hidden="true">–.––</p>
+          <p class="panel-note">Complete the form and choose Predict score. The model's estimate appears here.</p>
+        </div>
+
+        <div class="state state-loading" aria-hidden="true">
+          <p class="score score-idle score-pulse">–.––</p>
+          <p class="panel-note">Running the model…</p>
+        </div>
+
+        <div class="state state-success">
+          <div id="score-block" class="score-block" tabindex="-1">
+            <p class="score-label">Predicted mental health score</p>
+            <p class="score">
+              <span id="score-value" aria-hidden="true">0.00</span>
+              <span id="score-sr" class="sr-only"></span>
+            </p>
+          </div>
+          <p class="panel-note">The model's estimate for the details you entered, rounded to two decimals.</p>
+          <details class="payload">
+            <summary>Inputs sent to the model</summary>
+            <pre id="payload-preview"></pre>
+          </details>
+          <button type="button" id="reset-btn" class="btn btn-secondary">Try another assessment</button>
+        </div>
+
+        <p class="panel-disclaimer">This result is a model estimate for informational purposes only. It is not a diagnosis or a clinical assessment.</p>
+      </aside>
+    </section>
+
+    <section id="how-it-works" class="shell how" aria-labelledby="how-title">
+      <h2 id="how-title">How it works</h2>
+      <ol class="how-list">
+        <li>
+          <h3>Enter your details</h3>
+          <p>Age, country, platform, sleep, study and activity hours, stress level and a few more. All 12 fields are required.</p>
+        </li>
+        <li>
+          <h3>The model scores them</h3>
+          <p>Your browser sends the values as JSON to the <code>/predict</code> endpoint. The server groups the country itself and runs a scikit-learn model.</p>
+        </li>
+        <li>
+          <h3>Read the estimate</h3>
+          <p>You get a single number rounded to two decimals. It is an estimate from the model, not a diagnosis.</p>
+        </li>
+      </ol>
+    </section>
+  </main>
+
+  <footer id="disclaimer" class="site-footer">
+    <div class="shell footer-inner">
+      <div>
+        <h2>Disclaimer</h2>
+        <p>MindPredict is a machine learning portfolio project. The score is a model estimate for informational purposes only. It does not diagnose any mental health condition and is not a substitute for advice from a qualified professional. If you are worried about your mental health, please talk to someone you trust or a health professional.</p>
+      </div>
+      <p class="endpoint">Prediction endpoint: <code id="api-endpoint"></code></p>
+    </div>
+  </footer>
+
+  <script src="./app.js"></script>
+</body>
+</html>
