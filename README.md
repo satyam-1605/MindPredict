@@ -88,7 +88,7 @@ All 12 fields are required by the request model.
 The repository URL is not available in the current project files. Replace the placeholder URL with the published repository URL before cloning:
 
 ```powershell
-$RepoUrl = "https://github.com/<satyam-1605>/<MindPredict>.git"  # Replace with the actual URL
+$RepoUrl = "https://github.com/satyam-1605/MindPredict.git" # Replace with the actual URL
 git clone $RepoUrl
 Set-Location .\mindpredict
 ```
