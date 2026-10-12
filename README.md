@@ -1,146 +1,231 @@
-# MindPredict
+# MindPredict 
 
-**Machine-learning-based mental health score estimation from lifestyle and digital behavior data.**
+**An ML-powered web application for predicting student mental health scores using lifestyle, academic, and social media usage patterns.**
 
-## Table of Contents
+[![Live Demo](https://img.shields.io/badge/Live-Demo-10B981?style=for-the-badge)](https://mindpredict-1-cmta.onrender.com/)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-Backend-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 
-- [Overview](#overview)
-- [Features](#features)
-- [Input Features](#input-features)
-- [Technology Stack](#technology-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation and Setup](#installation-and-setup)
-- [Run the Backend](#run-the-backend)
-- [Run the Frontend](#run-the-frontend)
-- [Model and Prediction Workflow](#model-and-prediction-workflow)
-- [Author and License](#author-and-license)
-- [Screenshots](#screenshots)
+## 🌐 Live Demo
 
-## Overview
+**Try MindPredict:** https://mindpredict-1-cmta.onrender.com/
 
-MindPredict is a web application that estimates a numerical mental health score from a person's lifestyle and digital behavior inputs. The browser sends the assessment fields as JSON to a FastAPI endpoint, which prepares a one-row pandas DataFrame and passes it to a saved scikit-learn model. The API returns the model's estimated score.
+The application allows users to enter lifestyle and academic information and receive a machine-learning-generated mental health score estimate.
 
-This is an educational machine learning project, not a clinical diagnostic tool. Its output is not a diagnosis or a substitute for professional care.
+## 📌 Overview
 
-## Features
+MindPredict is a machine learning project that explores the relationship between students' lifestyle habits, academic routines, social media usage, and mental health scores.
 
-- Web-based assessment form with 12 required inputs.
-- Lifestyle, academic, stress, and digital behavior inputs.
-- Prediction using a saved machine learning model.
-- FastAPI REST endpoint at `POST /predict`.
-- Responsive HTML, CSS, and vanilla JavaScript frontend.
-- Client-side checks and API-side Pydantic validation, including field constraints and enumerated choices.
-- Frontend error handling for validation responses, network failures, timeouts, and unexpected response shapes.
+The application combines a trained machine learning model with a FastAPI backend and a web-based frontend. Users can submit their information through an interactive form and receive a predicted score from the deployed model.
 
-## Input Features
+## ✨ Features
 
-The API accepts these JSON properties. Property names are case-sensitive. The frontend presents country as a dropdown; the backend accepts `country` as a string.
+- **Mental Health Score Prediction:** Generates a score estimate using a trained ML model.
+- **Lifestyle Analysis Inputs:** Considers sleep, physical activity, study hours, stress level, and social media habits.
+- **Social Media Usage:** Includes daily usage hours, device unlock frequency, and preferred platform.
+- **Input Validation:** Validates user-provided data through Pydantic and FastAPI.
+- **REST API:** Exposes a prediction endpoint for frontend integration.
+- **Web Interface:** Provides a browser-based interface for submitting inputs and viewing results.
+- **Cloud Deployment:** Frontend and backend are deployed using Render.
 
-| Input | JSON property | Accepted values or constraint |
-| --- | --- | --- |
-| Age | `age` | Integer from 10 to 100 |
-| Gender | `gender` | `Male` or `Female` |
-| Country | `country` | String; the frontend offers India, USA, Canada, Australia, UK, Germany, Mexico, Turkey, France, or Other |
-| Academic Level | `academic_level` | `Undergraduate`, `Graduate`, or `High School` |
-| Most Used Platform | `most_used_platform` | `Facebook`, `LinkedIn`, `Instagram`, `Snapchat`, `Twitter`, `YouTube`, `TikTok`, `LINE`, `KakaoTalk`, `VKontakte`, `WhatsApp`, or `WeChat` |
-| Purpose of Use | `purpose_of_use` | `Networking`, `Education`, `Entertainment`, or `News` |
-| Average Daily Usage Hours | `avg_daily_usage_hours` | Number from 0 to 24 |
-| Daily Unlocks | `daily_unlocks` | Integer of 0 or greater |
-| Study Hours | `study_hours` | Number from 0 to 24 |
-| Physical Activity Hours | `physical_activity_hours` | Number from 0 to 24 |
-| Sleep Hours Per Night | `sleep_hours_per_night` | Number from 0 to 24 |
-| Stress Level | `stress_level` | `Medium`, `Low`, `Very High`, or `High` |
+## 🛠️ Tech Stack
 
-All 12 fields are required by the request model.
+| Component | Technologies |
+|---|---|
+| Programming Language | Python |
+| Machine Learning | scikit-learn |
+| Data Processing | Pandas |
+| Model Serialization | Joblib |
+| Backend | FastAPI, Uvicorn |
+| Data Validation | Pydantic |
+| Frontend | HTML, CSS, JavaScript |
+| Deployment | Render |
 
-## Technology Stack
+## ⚙️ How It Works
 
-- **Frontend:** HTML, CSS, vanilla JavaScript
-- **Backend:** Python, FastAPI, Uvicorn, Pydantic
-- **Machine learning and data processing:** scikit-learn, Joblib, pandas
+1. The user enters information about their age, academic level, lifestyle, stress, and social media usage.
+2. The frontend sends the submitted information to the FastAPI backend.
+3. The backend validates the input and prepares the features required by the trained model.
+4. The saved machine learning model generates a prediction.
+5. The API returns the predicted mental health score, which the frontend displays to the user.
 
-## Project Structure
+## 📊 Input Features
 
-```text
-.
-├── .gitignore
-├── app.js
-├── index.html
-├── main.py
-├── mental_health_model.pkl
-├── MLProject.ipynb
-├── README.md
-├── requirements.txt
-├── style.css
-├── Student Social Media And Mental Health Impact.csv
+The prediction API accepts the following information:
+
+| Feature | Description |
+|---|---|
+| Age | User's age |
+| Gender | Gender category |
+| Country | Country of residence |
+| Academic Level | Undergraduate, graduate, or high school |
+| Most Used Platform | Preferred social media platform |
+| Purpose of Use | Primary reason for social media usage |
+| Average Daily Usage Hours | Daily social media usage |
+| Daily Unlocks | Number of device unlocks per day |
+| Study Hours | Daily study duration |
+| Physical Activity Hours | Daily physical activity duration |
+| Sleep Hours Per Night | Average nightly sleep |
+| Stress Level | Self-reported stress category |
+
+## 🔌 API Documentation
+
+**Backend URL:** https://mindpredict-ctzu.onrender.com
+
+**Interactive API documentation:** https://mindpredict-ctzu.onrender.com/docs
+
+### `GET /`
+
+Returns a basic backend response to confirm that the API is accessible.
+
+### `POST /predict`
+
+Accepts student lifestyle and usage information and returns the predicted mental health score.
+
+Example request:
+
+```json
+{
+  "age": 21,
+  "gender": "Male",
+  "country": "India",
+  "academic_level": "Undergraduate",
+  "most_used_platform": "Instagram",
+  "purpose_of_use": "Entertainment",
+  "avg_daily_usage_hours": 4.5,
+  "daily_unlocks": 60,
+  "study_hours": 5,
+  "physical_activity_hours": 1,
+  "sleep_hours_per_night": 7,
+  "stress_level": "Medium"
+}
 ```
 
-## Prerequisites
+Example response:
 
-- Windows, with Conda (Miniconda or Anaconda) or another Python virtual environment.
-- Python 3.12. The listed packages have Python 3.12-compatible releases, though `requirements.txt` does not pin package versions. Compatibility between the installed scikit-learn version and the serialized model has not been established here.
-- Git, if cloning the repository.
-- A browser. VS Code Live Server is optional for serving the frontend.
-
-## Installation and Setup
-
-The repository URL is not available in the current project files. Replace the placeholder URL with the published repository URL before cloning:
-
-```powershell
-$RepoUrl = "https://github.com/satyam-1605/MindPredict.git" # Replace with the actual URL
-git clone $RepoUrl
-Set-Location .\mindpredict
+```json
+{
+  "predicted_mental_health_score": 6.25
+}
 ```
 
-If the cloned folder has a different name, change the `Set-Location` path accordingly. From the directory containing `main.py`, create and activate the Conda environment:
+*The response value above is illustrative; actual predictions depend on the trained model and the submitted inputs.*
 
-```powershell
-conda create --name mindpredict python=3.12 -y
+## 🚀 Run Locally
+
+### Prerequisites
+
+- Python 3.12
+- Git
+- pip
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/satyam-1605/MindPredict.git
+cd MindPredict
+```
+
+### 2. Create and activate a Conda environment
+
+```bash
+conda create -n mindpredict python=3.12
 conda activate mindpredict
+```
+
+Alternatively, create a virtual environment using Python's `venv`.
+
+### 3. Install dependencies
+
+```bash
 python -m pip install -r requirements.txt
 ```
 
-If an environment named `mindpredict` already exists, do not create it again; activate it and install the requirements:
+### 4. Start the backend
 
-```powershell
-conda activate mindpredict
-python -m pip install -r requirements.txt
-```
+Ensure `main.py`, `requirements.txt`, and `mental_health_model.pkl` are in the expected backend directory.
 
-## Run the Backend
+Run:
 
-In the activated environment, from the directory containing `main.py` and `mental_health_model.pkl`, start the API:
-
-```powershell
+```bash
 uvicorn main:app --reload
 ```
 
-- API base URL: `http://127.0.0.1:8000`
-- Interactive Swagger UI: `http://127.0.0.1:8000/docs`
-- Prediction endpoint: `POST http://127.0.0.1:8000/predict`
+The API will be available at:
 
-The model file is loaded when `main.py` is imported. Keep `mental_health_model.pkl` in the working directory when starting Uvicorn.
+http://127.0.0.1:8000
 
-## Run the Frontend
+Open the interactive API documentation at:
 
-Open the project root in VS Code and use Live Server on `index.html`, or serve the static files from the project root with Python:
+http://127.0.0.1:8000/docs
 
-```powershell
-python -m http.server 5500
+### 5. Configure the frontend
+
+The frontend must use the appropriate backend URL.
+
+For local development, configure the API base URL in `app.js` to point to:
+
+```javascript
+const API_BASE_URL = "http://127.0.0.1:8000";
 ```
 
-Then open `http://127.0.0.1:5500`. The HTML references the stylesheet at `./style.css` and the script at `./app.js`. In `app.js`, `API_BASE_URL` is set to `http://127.0.0.1:8000`; update it there if the API runs at a different address. The backend currently enables CORS for all origins.
+Use the same variable name and request pattern as your existing frontend code.
 
-## Model and Prediction Workflow
+Open `index.html` in your browser or use the VS Code Live Server extension. Keep the backend running while testing predictions.
 
-`main.py` loads `mental_health_model.pkl` with `joblib.load` when the module is imported. For each request, it creates a pandas DataFrame containing the 12 submitted values and an additional `Grouped_country` value. The country group is the submitted country when it is in the backend's fixed country list; otherwise it is `Other`. The original `Country` value is also passed through unchanged. The code calls `model.predict` on that one-row DataFrame, converts the first prediction to a float, rounds it to two decimal places, and returns it as `predicted_mental_health_score`.
+For the deployed website, the API base URL should point to:
 
-## Author and License
+```text
+https://mindpredict-ctzu.onrender.com
+```
 
-- **Author:** [Satyam Chaturvedi] (replace with your preferred name or profile).
-- **License:** No license file or license information was found in the project. Add a license only after choosing the terms, then update this section.
+## ☁️ Deployment
 
-## Screenshots
+MindPredict is deployed on Render using separate frontend and backend services.
 
-No screenshots are currently included. Add actual project screenshots here when available.
+### Backend
+
+- **Framework:** FastAPI
+- **Build command:** `pip install -r requirements.txt`
+- **Start command:**
+
+```bash
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
+
+### Frontend
+
+- **Technologies:** HTML, CSS, JavaScript
+- **Hosting:** Render Static Site
+- **API connection:** Deployed FastAPI backend
+
+**Note:** Render's free services may spin down after inactivity, so the first request after a period of inactivity can take longer.
+
+## ⚠️ Disclaimer
+
+MindPredict is an educational machine learning project. Its output is a model-generated estimate based on the information provided and patterns learned from its training data.
+
+It is **not a clinical assessment, medical diagnosis, or substitute for professional mental health advice**. Predictions may be inaccurate and should not be used to make medical decisions.
+
+## 🔮 Future Improvements
+
+- Add visual analytics for lifestyle and usage patterns.
+- Improve model evaluation and document performance metrics.
+- Add automated tests for the API and prediction workflow.
+- Improve input validation and user-facing error messages.
+- Enhance accessibility and responsive design.
+- Explore explainability techniques to better understand model predictions.
+
+## 👨‍💻 Author
+
+**Satyam Chaturvedi**
+
+B.Tech — Computer Science and Engineering (AI & ML)
+
+- **GitHub:** [@satyam-1605](https://github.com/satyam-1605)
+- **Project Repository:** [MindPredict](https://github.com/satyam-1605/MindPredict)
+- **Live Application:** [MindPredict Demo](https://mindpredict-1-cmta.onrender.com/)
+
+---
+
+⭐ If you find this project interesting, consider starring the repository.
